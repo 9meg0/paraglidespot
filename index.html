@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Spot e meteo per piloti di parapendio — condizioni, mappe, webcam e previsioni volo" />
+  <meta name="theme-color" content="#0f1117" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ParaglideSpot" />
+  <meta property="og:description" content="Spot e meteo per il volo libero" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <title>ParaglideSpot</title>
+  <link rel="stylesheet" href="/src/styles/main.css" />
+</head>
+<body>
+
+  <!-- ── TOPBAR ─────────────────────────────────────────────────────────── -->
+  <header class="topbar">
+    <div class="topbar-logo">
+      <img src="/logo.png" alt="ParaglideSpot" class="topbar-logo-icon" />
+      <div class="topbar-logo-text">
+        <span class="topbar-name" id="topbar-name">ParaglideSpot</span>
+        <span class="topbar-tagline" id="topbar-tagline">Il vento giusto, al momento giusto.</span>
+      </div>
+    </div>
+    <div class="topbar-controls">
+      <div class="lang-switch" id="lang-switch" aria-label="Language switch">
+        <button class="lang-btn" data-lang="it" type="button">🇮🇹 IT</button>
+        <button class="lang-btn" data-lang="en" type="button">🇬🇧 EN</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── LAYOUT ─────────────────────────────────────────────────────────── -->
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <!-- popolata da JS -->
+    </aside>
+
+    <!-- Main content -->
+    <main class="main" id="main-content">
+      <!-- iniettato da JS -->
+    </main>
+
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

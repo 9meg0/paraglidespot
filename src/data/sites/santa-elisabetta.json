@@ -1,0 +1,81 @@
+{
+  "id": "santa-elisabetta",
+  "name": "Santa Elisabetta – Salto",
+  "region": "piemonte",
+  "province": "TO",
+
+  "website":  "https://www.vlse.it/",
+  "joinUrl":  "https://www.vlse.it/copia-di-iscrizioni-al-club",
+  "rulesUrl": "https://www.vlse.it/regolamento",
+
+  "contacts": [
+    { "label": "Italiano (Flavio)", "phone": "347 242 4494" },
+    { "label": "English (Ezio)",    "phone": "346 806 7361" }
+  ],
+
+  "shuttle": {
+    "label": "Servizio Navetta",
+    "contactLabel": "Flavio",
+    "phone": "347 242 4494"
+  },
+
+  "altitude": "398–1400 m",
+  "windDirs": ["S"],
+
+  "lat": 45.4179093,
+  "lon": 7.6421572,
+
+  "takeoffs": [
+    {
+      "name":     "Decollo Basso – Monte Belice",
+      "lat":      45.4179093,
+      "lon":      7.6421572,
+      "altitude": 1000,
+      "windDirs": ["S"],
+      "type":     "Facile · parapendio e deltaplano",
+      "season":   "Tutto l'anno",
+      "mapsUrl":  "https://www.google.com/maps/dir/?api=1&destination=Monte%20Belice%2C%2010080%20Chiesanuova%20TO%2C%20Italia"
+    },
+    {
+      "name":     "Decollo Alto – Pian del Lupo",
+      "lat":      45.4431091,
+      "lon":      7.6535628,
+      "altitude": 1400,
+      "windDirs": ["S"],
+      "type":     "Facile · parapendio e deltaplano",
+      "season":   "Primavera · estate · autunno",
+      "mapsUrl":  "https://www.google.com/maps/dir/?api=1&destination=Via%20Pian%20del%20Lupo%2C%2010080%20Borgiallo%20TO%2C%20Italia"
+    }
+  ],
+
+  "landing": {
+    "name":     "Cuorgné – Via Pont Canavese",
+    "lat":      45.4022024,
+    "lon":      7.6444938,
+    "altitude": 398,
+    "mapsUrl":  "https://www.google.com/maps/dir/44.9442898,7.6317668/Via+Pont+Canavese,+10082+Cuorgn%C3%A8+TO/@45.1725248,7.3530288,10z",
+    "notes":    ""
+  },
+
+  "webcams": [
+    {
+      "label":          "Decollo Basso – Monte Belice",
+      "url":            "https://webcam.erre-elle.net/belice/Belice.jpg",
+      "embedUrl":       "https://webcam.erre-elle.net/belice/Belice.jpg",
+      "type":           "jpg",
+      "refreshSeconds": 120
+    }
+  ],
+
+  "meteo": {
+    "meteoParapente": "https://meteo-parapente.com/#/45.4143,7.6421,13",
+    "windyUrl":   "https://www.windy.com/45.406/7.640?45.402,7.645,14",
+    "windy":      { "lat": 45.4179, "lon": 7.6422, "zoom": 11, "overlay": "wind" },
+    "meteoblue":  "https://www.meteoblue.com/it/tempo/settimana/canischio_italia",
+    "xcmeteor":   "https://www.xcmeteor.com/meteo?lat=45.4179&lon=7.6422",
+    "skysight":   "https://skysight.io/#45.4179/7.6422/11/BLTOPWIND",
+    "arpa":       "https://www.arpa.piemonte.it/rischinaturali/tematismi/meteo/previsioni/bollettini"
+  },
+
+  "notes": ""
+}

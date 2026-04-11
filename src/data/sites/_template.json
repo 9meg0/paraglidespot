@@ -1,0 +1,63 @@
+{
+  "id":       "nome-localita",
+  "name":     "Nome – Sottotitolo",
+  "region":   "piemonte",
+  "province": "TO",
+
+  "website":  "https://...",
+  "joinUrl":  "https://...",
+  "rulesUrl": "https://...",
+
+  "contacts": [
+    { "label": "Italiano (Mario)", "phone": "333 123 4567" },
+    { "label": "English (John)",   "phone": "334 765 4321" }
+  ],
+
+  "altitude": "400–1500 m",
+  "windDirs": ["N", "NW"],
+
+  "lat": 44.0,
+  "lon": 7.5,
+
+  "takeoffs": [
+    {
+      "name":     "Decollo Principale",
+      "lat":      44.0,
+      "lon":      7.5,
+      "altitude": 1500,
+      "windDirs": ["NW"],
+      "type":     "Facile · parapendio",
+      "season":   "Tutto l'anno",
+      "mapsUrl":  "https://www.google.com/maps/dir/?api=1&destination=44.0,7.5"
+    }
+  ],
+
+  "landing": {
+    "name":     "Comune – Via/Zona",
+    "lat":      44.0,
+    "lon":      7.5,
+    "altitude": 400,
+    "mapsUrl":  "https://www.google.com/maps/dir/?api=1&destination=44.0,7.5",
+    "notes":    ""
+  },
+
+  "webcams": [
+    {
+      "label":          "Decollo Principale",
+      "url":            "https://example.com/cam.jpg",
+      "embedUrl":       "https://example.com/cam.jpg",
+      "type":           "jpg",
+      "refreshSeconds": 120
+    }
+  ],
+
+  "meteo": {
+    "windy":      { "lat": 44.0, "lon": 7.5, "zoom": 10, "overlay": "wind" },
+    "meteoblue":  "https://www.meteoblue.com/it/tempo/settimana/nome_italia",
+    "xcmeteor":   "https://www.xcmeteor.com/meteo?lat=44.0&lon=7.5",
+    "skysight":   "https://skysight.io/#44.0/7.5/10/BLTOPWIND",
+    "arpa":       "https://www.arpa.piemonte.it/rischinaturali/tematismi/meteo/previsioni/bollettini"
+  },
+
+  "notes": ""
+}
