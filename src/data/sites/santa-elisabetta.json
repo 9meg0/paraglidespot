@@ -71,11 +71,7 @@
     "meteoParapente": "https://meteo-parapente.com/#/45.4143,7.6421,13",
     "windyUrl":   "https://www.windy.com/45.406/7.640?45.402,7.645,14",
     "windy":      { "lat": 45.4179, "lon": 7.6422, "zoom": 11, "overlay": "wind" },
-    "meteoblue":  "https://www.meteoblue.com/it/tempo/settimana/canischio_italia",
-    "xcmeteor":   "https://www.xcmeteor.com/meteo?lat=45.4179&lon=7.6422",
-    "skysight":   "https://skysight.io/#45.4179/7.6422/11/BLTOPWIND",
-    "arpa":       "https://www.arpa.piemonte.it/rischinaturali/tematismi/meteo/previsioni/bollettini"
-  },
-
+    "meteoblue": "https://www.meteoblue.com/it/tempo/settimana/santa-elisabetta_italia_8983987"  
+          },
   "notes": ""
 }
