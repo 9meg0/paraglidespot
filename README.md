@@ -1,6 +1,6 @@
 # ParaglideSpot
 
-Paraglide is an open project built to support the free flight community in Italy and, ideally, beyond.
+ParaglideSpot is an open project built to support the free flight community in Italy and, ideally, beyond.
 
 The goal is simple: make it easier for pilots to find useful, practical, spot-specific information in one place, including local site details, contacts, takeoff and landing references, webcams, and weather links.
 It starts from Piedmont, but the project is intentionally open to growth. If the structure proves useful, it can support more Italian regions and eventually spots in other countries as well.
@@ -15,13 +15,13 @@ Flying communities often rely on fragmented information:
 - weather tools scattered across different platforms
 - spot details that are hard to keep updated
 
-DoveSiVola tries to reduce that fragmentation with a lightweight, open, data-driven site.
+ParaglideSpot tries to reduce that fragmentation with a lightweight, open, data-driven site.
 
 This is not meant to replace pilot judgement, local briefing, club rules, or official sources. It is a practical community tool to help pilots reach the right information faster.
 
 ## Open project
 
-DoveSiVola is open by design.
+ParaglideSpot is open by design.
 
 There are two ways to contribute:
 
@@ -120,7 +120,7 @@ Feature ideas are welcome even before code exists. If you want to propose a new 
 
 ## How non-technical contributors can help
 
-You do not need to write code to make DoveSiVola better.
+You do not need to write code to make ParaglideSpot better.
 
 If you know a flying spot and want it added, you can simply fill in the information using the template below and send it to the maintainers or submit it through a contribution channel when available.
 
