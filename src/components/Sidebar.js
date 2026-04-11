@@ -33,20 +33,54 @@ export class Sidebar {
   _renderSiteList() {
     const container = this.el.querySelector('#site-list-container')
     const sites = getSitesByRegion(this.currentRegion)
+    const activeSiteInRegion = sites.some(site => site.id === this.currentSiteId)
 
     if (this.currentRegion === 'tutti') {
       const piemonte = sites.filter(s => s.region === 'piemonte')
       const liguria  = sites.filter(s => s.region === 'liguria')
       container.innerHTML = `
+        ${this._mobileSelectHTML(piemonte, liguria, activeSiteInRegion)}
         ${this._sectionHTML(t(this.lang, 'piedmont'), piemonte)}
         ${this._sectionHTML(t(this.lang, 'liguria'), liguria)}
       `
     } else {
       const label = this.currentRegion === 'piemonte' ? t(this.lang, 'piedmont') : t(this.lang, 'liguria')
-      container.innerHTML = this._sectionHTML(label, sites)
+      container.innerHTML = `
+        ${this._mobileSelectHTML(sites, [], activeSiteInRegion)}
+        ${this._sectionHTML(label, sites)}
+      `
     }
 
     this._bindSiteItems()
+    this._bindMobileSelect()
+  }
+
+  _mobileSelectHTML(primarySites, secondarySites = [], activeSiteInRegion = true) {
+    const selectedId = activeSiteInRegion ? this.currentSiteId : primarySites[0]?.id ?? secondarySites[0]?.id ?? ''
+
+    const optionHTML = site => `
+      <option value="${site.id}" ${site.id === selectedId ? 'selected' : ''}>${site.name}</option>
+    `
+
+    const groupedOptions = secondarySites.length
+      ? `
+        <optgroup label="${t(this.lang, 'piedmont')}">
+          ${primarySites.map(optionHTML).join('')}
+        </optgroup>
+        <optgroup label="${t(this.lang, 'liguria')}">
+          ${secondarySites.map(optionHTML).join('')}
+        </optgroup>
+      `
+      : primarySites.map(optionHTML).join('')
+
+    return `
+      <div class="mobile-site-picker">
+        <div class="sidebar-section-title">${t(this.lang, 'site')}</div>
+        <select class="region-select mobile-site-select" id="site-select-mobile" aria-label="${t(this.lang, 'site')}">
+          ${groupedOptions}
+        </select>
+      </div>
+    `
   }
 
   _sectionHTML(label, sites) {
@@ -86,23 +120,43 @@ export class Sidebar {
     this.el.querySelector('#region-select')?.addEventListener('change', e => {
       this.currentRegion = e.target.value
       this._renderSiteList()
+
+      const sites = getSitesByRegion(this.currentRegion)
+      if (sites.length && !sites.some(site => site.id === this.currentSiteId)) {
+        this._activateSite(sites[0].id)
+      }
+    })
+  }
+
+  _bindMobileSelect() {
+    this.el.querySelector('#site-select-mobile')?.addEventListener('change', e => {
+      this._activateSite(e.target.value)
     })
   }
 
   _bindSiteItems() {
     this.el.querySelectorAll('.site-item').forEach(item => {
-      const activate = () => {
-        this.currentSiteId = item.dataset.siteId
-        this.el.querySelectorAll('.site-item').forEach(i => i.classList.remove('active'))
-        item.classList.add('active')
-        this.el.dispatchEvent(new CustomEvent('site-select', {
-          bubbles: true,
-          detail: { siteId: item.dataset.siteId },
-        }))
-      }
+      const activate = () => this._activateSite(item.dataset.siteId)
       item.addEventListener('click', activate)
       item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') activate() })
     })
+  }
+
+  _activateSite(siteId) {
+    this.currentSiteId = siteId
+    this.el.querySelectorAll('.site-item').forEach(item => {
+      item.classList.toggle('active', item.dataset.siteId === siteId)
+    })
+
+    const mobileSelect = this.el.querySelector('#site-select-mobile')
+    if (mobileSelect && mobileSelect.value !== siteId) {
+      mobileSelect.value = siteId
+    }
+
+    this.el.dispatchEvent(new CustomEvent('site-select', {
+      bubbles: true,
+      detail: { siteId },
+    }))
   }
 
   /** Seleziona un sito programmaticamente (es. primo della lista all'avvio) */

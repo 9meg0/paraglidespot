@@ -39,23 +39,26 @@ function headerHTML(site, lang) {
         ${actionLinks.length ? `<div class="spot-header-actions">${actionLinks.join('')}</div>` : ''}
       </div>
       <div class="spot-header-divider"></div>
-      ${site.contacts?.length ? `
+      ${(site.contacts?.length || site.shuttle?.phone) ? `
         <div class="spot-contacts">
-          <span class="spot-contacts-label"><span class="spot-contacts-icon">☎</span>${t(lang, 'contacts')}</span>
-          ${site.contacts.map(c => `
-            <a href="tel:${c.phone.replace(/\s/g,'')}" class="spot-contact-link">
-              <span class="spot-contact-link-icon">☎</span>
-              <span class="spot-contact-link-text">${c.label}</span>
-              <strong>${c.phone}</strong>
-            </a>
-          `).join('<span class="spot-contacts-sep">·</span>')}
-          ${site.shuttle?.phone ? `
-            <span class="spot-contacts-sep">·</span>
-            <span class="spot-shuttle-inline">
-              <span class="spot-shuttle-inline-label">${t(lang, 'shuttle')}</span>
-              <a href="tel:${site.shuttle.phone.replace(/\s/g,'')}" class="spot-shuttle-inline-phone">${site.shuttle.phone}</a>
-            </span>
-          ` : ''}
+          <div class="spot-contacts-label">
+            <span class="spot-contacts-icon">☎</span>
+            <span>${t(lang, 'contacts')}</span>
+          </div>
+          <div class="spot-contacts-list">
+            ${(site.contacts ?? []).map(c => `
+              <a href="tel:${c.phone.replace(/\s/g,'')}" class="spot-contact-link">
+                <span class="spot-contact-link-text">${c.label}</span>
+                <strong>${c.phone}</strong>
+              </a>
+            `).join('')}
+            ${site.shuttle?.phone ? `
+              <a href="tel:${site.shuttle.phone.replace(/\s/g,'')}" class="spot-shuttle-inline">
+                <span class="spot-shuttle-inline-label">${t(lang, 'shuttle')}</span>
+                <span class="spot-shuttle-inline-phone">${site.shuttle.phone}</span>
+              </a>
+            ` : ''}
+          </div>
         </div>
       ` : ''}
     </div>

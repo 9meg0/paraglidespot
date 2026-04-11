@@ -779,48 +779,67 @@ a:hover { text-decoration: underline; }
 
 .spot-contacts {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 12px;
   font-size: 13px;
 }
 
 .spot-contacts-label {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   color: var(--text3);
-  flex-shrink: 0;
   font-weight: 600;
 }
 
 .spot-contacts-icon,
-.spot-contact-link-icon,
 .widget-check {
   color: var(--accent);
 }
 
+.spot-contacts-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .spot-contact-link {
   color: var(--text2);
-  white-space: nowrap;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 260px;
+  flex: 1 1 320px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.03);
 }
-.spot-contact-link strong { color: var(--accent); font-weight: 600; }
+.spot-contact-link strong {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 15px;
+}
 .spot-contact-link:hover strong { text-decoration: underline; }
 
 .spot-contact-link-text {
-  white-space: nowrap;
+  white-space: normal;
   min-width: 0;
 }
 
 .spot-shuttle-inline {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  color: var(--text3);
-  white-space: nowrap;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 260px;
+  flex: 1 1 320px;
+  color: var(--text2);
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(91,155,255,.14);
+  background: rgba(91,155,255,.08);
 }
 
 .spot-shuttle-inline-label {
@@ -834,12 +853,11 @@ a:hover { text-decoration: underline; }
 }
 
 .spot-shuttle-inline-phone {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   color: #c7d9ff;
 }
 .spot-shuttle-inline-phone:hover { color: var(--accent); }
-.spot-contacts-sep   { color: var(--text3); }
 
 /* ── SPOT TABS (Decolli / Atterraggio) ───────────────────────────────────── */
 .spot-tabs-wrapper {
@@ -1139,10 +1157,14 @@ a:hover { text-decoration: underline; }
 
   /* Su tablet: region toggle + lista siti affiancati */
   .sidebar > div:first-child { flex-shrink: 0; }
-  #site-list-container {
-    flex: 1;
-    min-width: 200px;
-  }
+#site-list-container {
+  flex: 1;
+  min-width: 200px;
+}
+
+.mobile-site-picker {
+  display: none;
+}
 
   /* Lista siti in orizzontale */
   .site-list {
@@ -1178,18 +1200,21 @@ a:hover { text-decoration: underline; }
     padding: 12px 14px;
     align-items: flex-start;
     gap: 12px;
+    flex-wrap: wrap;
     background:
       linear-gradient(180deg, rgba(20,24,39,.96) 0%, rgba(20,24,39,.9) 100%);
     backdrop-filter: blur(14px);
   }
 
   .topbar-controls {
-    margin-left: auto;
-    align-self: center;
+    width: 100%;
+    margin-left: 58px;
+    align-self: flex-start;
   }
 
   .topbar-logo {
     flex: 1;
+    width: 100%;
     min-width: 0;
     gap: 10px;
     align-items: flex-start;
@@ -1216,7 +1241,7 @@ a:hover { text-decoration: underline; }
     font-size: 9px;
     letter-spacing: 0.18em;
     line-height: 1.3;
-    max-width: 24ch;
+    max-width: none;
   }
 
   .lang-switch {
@@ -1246,6 +1271,7 @@ a:hover { text-decoration: underline; }
 
   .sidebar > div:first-child,
   #site-list-container,
+  .mobile-site-picker,
   .sidebar-region-section {
     width: 100%;
   }
@@ -1260,6 +1286,10 @@ a:hover { text-decoration: underline; }
     background: rgba(12,15,26,.65);
   }
 
+  .mobile-site-picker {
+    display: block;
+  }
+
   .site-list {
     flex-direction: row;
     gap: 8px;
@@ -1267,6 +1297,10 @@ a:hover { text-decoration: underline; }
     overflow-x: auto;
     padding-bottom: 4px;
     scroll-snap-type: x proximity;
+  }
+
+  .sidebar-region-section {
+    display: none;
   }
 
   .site-item {
@@ -1328,8 +1362,6 @@ a:hover { text-decoration: underline; }
   }
 
   .spot-contacts {
-    flex-direction: column;
-    align-items: stretch;
     gap: 8px;
   }
 
@@ -1337,27 +1369,29 @@ a:hover { text-decoration: underline; }
     margin-bottom: 2px;
   }
 
-  .spot-contacts-sep {
-    display: none;
+  .spot-contacts-list {
+    flex-direction: column;
   }
 
   .spot-contact-link,
   .spot-shuttle-inline {
     width: 100%;
-    justify-content: space-between;
+    min-width: 0;
     gap: 10px;
-    white-space: normal;
     flex-wrap: wrap;
     padding: 10px 12px;
     border-radius: 12px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.04);
   }
 
   .spot-contact-link-text,
   .spot-shuttle-inline-label,
   .spot-shuttle-inline-phone {
     white-space: normal;
+  }
+
+  .spot-contact-link strong,
+  .spot-shuttle-inline-phone {
+    font-size: 14px;
   }
 
   .spot-tabs {
@@ -1430,4 +1464,10 @@ a:hover { text-decoration: underline; }
   .sources-grid { grid-template-columns: 1fr; }
   .webcam-grid  { grid-template-columns: 1fr; }
   .forecast-row { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 420px) {
+  .topbar-controls {
+    margin-left: 0;
+  }
 }
