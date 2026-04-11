@@ -14,7 +14,7 @@ function getSiteIdFromHash() {
 
 const state = {
   activeSiteId: getSiteIdFromHash() ?? sites[0]?.id ?? null,
-  lang: localStorage.getItem('paraglidepot-lang') === 'en' ? 'en' : 'it',
+  lang: localStorage.getItem('paraglidespot-lang') === 'en' ? 'en' : 'it',
 }
 
 // ── Elementi DOM ─────────────────────────────────────────────────────────────
@@ -49,7 +49,7 @@ langSwitchEl?.addEventListener('click', e => {
   const nextLang = btn.dataset.lang
   if (!nextLang || nextLang === state.lang) return
   state.lang = nextLang
-  localStorage.setItem('paraglidepot-lang', state.lang)
+  localStorage.setItem('paraglidespot-lang', state.lang)
   sidebar.setLanguage(state.lang)
   renderChrome()
   renderMain()

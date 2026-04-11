@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  // Sostituisci 'dovesivola' con il nome esatto del tuo repository GitHub
-  base: '/dovesivola/',
+  // GitHub Pages project site path
+  base: '/paraglidespot/',
   server: {
-    open: '/dovesivola/',
+    open: '/paraglidespot/',
   },
   build: {
     outDir: 'dist',
