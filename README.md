@@ -1,6 +1,6 @@
-# DoveSiVola
+# ParaglideSpot
 
-DoveSiVola is an open project built to support the free flight community in Italy and, ideally, beyond.
+Paraglide is an open project built to support the free flight community in Italy and, ideally, beyond.
 
 The goal is simple: make it easier for pilots to find useful, practical, spot-specific information in one place, including local site details, contacts, takeoff and landing references, webcams, and weather links.
 It starts from Piedmont, but the project is intentionally open to growth. If the structure proves useful, it can support more Italian regions and eventually spots in other countries as well.
