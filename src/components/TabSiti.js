@@ -3,6 +3,26 @@ import { t } from '../i18n.js'
 
 const BASE_URL = import.meta.env.BASE_URL
 
+function phoneIconHTML() {
+  return `
+    <svg viewBox="0 0 24 24" aria-hidden="true" class="spot-contact-group-icon-svg">
+      <path d="M5.5 4.5h3l1.2 4.1-1.9 1.9a15.6 15.6 0 0 0 5.7 5.7l1.9-1.9 4.1 1.2v3a1.5 1.5 0 0 1-1.6 1.5A16.4 16.4 0 0 1 4 6.1 1.5 1.5 0 0 1 5.5 4.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `
+}
+
+function shuttleIconHTML() {
+  return `
+    <svg viewBox="0 0 24 24" aria-hidden="true" class="spot-contact-group-icon-svg">
+      <path d="M7 17V8.5A2.5 2.5 0 0 1 9.5 6h5A2.5 2.5 0 0 1 17 8.5V17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M7 12h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M9.5 9.5h.01M14.5 9.5h.01" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M6 17h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M9 17v2M15 17v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  `
+}
+
 export function renderTabSiti(siteId, lang = 'it') {
   const site = getSiteById(siteId)
   if (!site) return `
@@ -44,7 +64,7 @@ function headerHTML(site, lang) {
         <div class="spot-contacts">
           ${site.contacts?.length ? `
             <div class="spot-contact-group">
-              <div class="spot-contact-group-icon spot-contact-group-icon--contacts">☎</div>
+              <div class="spot-contact-group-icon spot-contact-group-icon--contacts">${phoneIconHTML()}</div>
               <div class="spot-contact-group-body">
                 <div class="spot-contact-group-label">${t(lang, 'contacts')}</div>
                 <div class="spot-contact-lines">
@@ -60,7 +80,7 @@ function headerHTML(site, lang) {
           ` : ''}
           ${site.shuttle?.phone ? `
             <div class="spot-contact-group spot-contact-group--shuttle">
-              <div class="spot-contact-group-icon spot-contact-group-icon--shuttle">🚌</div>
+              <div class="spot-contact-group-icon spot-contact-group-icon--shuttle">${shuttleIconHTML()}</div>
               <div class="spot-contact-group-body">
                 <div class="spot-contact-group-label">${t(lang, 'shuttle')}</div>
                 <a href="tel:${site.shuttle.phone.replace(/\s/g,'')}" class="spot-contact-link spot-contact-link--shuttle">

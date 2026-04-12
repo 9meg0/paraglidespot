@@ -811,13 +811,17 @@ a:hover { text-decoration: underline; }
 .widget-check {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 32px;
   height: 32px;
   border-radius: 999px;
   flex-shrink: 0;
-  font-size: 16px;
-  line-height: 1;
+}
+
+.spot-contact-group-icon-svg {
+  width: 16px;
+  height: 16px;
+  display: block;
 }
 
 .spot-contact-group-icon--contacts {
