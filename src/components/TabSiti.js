@@ -1,5 +1,7 @@
 import { getSiteById } from '../data/sites/index.js'
 import { t } from '../i18n.js'
+import { escapeAttribute, escapeHtml, safeUrl } from '../utils/dom.js'
+import { findMatchingWebcam } from '../utils/webcam.js'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -34,7 +36,7 @@ export function renderTabSiti(siteId, lang = 'it') {
     ${headerHTML(site, lang)}
     ${alertsCardHTML(site, lang)}
     ${spotTabsHTML(site, lang)}
-    ${site.notes ? `<div class="notes-card">${site.notes}</div>` : ''}
+    ${site.notes ? `<div class="notes-card">${escapeHtml(site.notes)}</div>` : ''}
     ${widgetCardHTML(t(lang, 'weatherInfo'), '', meteoLinksHTML(site, lang), lang)}
   `
 }
@@ -43,19 +45,23 @@ export function renderTabSiti(siteId, lang = 'it') {
 
 function headerHTML(site, lang) {
   const windLabel = site.windDirs.length ? site.windDirs.join('/') : '—'
+  const siteName = escapeHtml(site.name)
+  const altitude = escapeHtml(site.altitude)
+  const province = escapeHtml(site.province)
+  const subtitle = `${altitude} s.l.m. · ${escapeHtml(t(lang, 'windLabel'))}: ${escapeHtml(windLabel)} · ${province}`
 
   const actionLinks = [
-    site.website  ? `<a href="${site.website}"  target="_blank" rel="noopener" class="spot-action-link spot-action-link--site">${t(lang, 'website')}</a>`         : '',
-    site.joinUrl  ? `<a href="${site.joinUrl}"  target="_blank" rel="noopener" class="spot-action-link spot-action-link--join">${t(lang, 'join')}</a>`    : '',
-    site.rulesUrl ? `<a href="${site.rulesUrl}" target="_blank" rel="noopener" class="spot-action-link spot-action-link--rules">${t(lang, 'rules')}</a>`  : '',
+    safeUrl(site.website) ? `<a href="${escapeAttribute(safeUrl(site.website))}" target="_blank" rel="noopener" class="spot-action-link spot-action-link--site">${escapeHtml(t(lang, 'website'))}</a>` : '',
+    safeUrl(site.joinUrl) ? `<a href="${escapeAttribute(safeUrl(site.joinUrl))}" target="_blank" rel="noopener" class="spot-action-link spot-action-link--join">${escapeHtml(t(lang, 'join'))}</a>` : '',
+    safeUrl(site.rulesUrl) ? `<a href="${escapeAttribute(safeUrl(site.rulesUrl))}" target="_blank" rel="noopener" class="spot-action-link spot-action-link--rules">${escapeHtml(t(lang, 'rules'))}</a>` : '',
   ].filter(Boolean)
 
   return `
     <div class="spot-header">
       <div class="spot-header-top">
         <div class="spot-header-left">
-          <h2 class="spot-title">${site.name}</h2>
-          <p class="spot-subtitle">${site.altitude} s.l.m. · Vento: ${windLabel} · ${site.province}</p>
+          <h2 class="spot-title">${siteName}</h2>
+          <p class="spot-subtitle">${subtitle}</p>
         </div>
         ${actionLinks.length ? `<div class="spot-header-actions">${actionLinks.join('')}</div>` : ''}
       </div>
@@ -66,12 +72,12 @@ function headerHTML(site, lang) {
             <div class="spot-contact-group">
               <div class="spot-contact-group-icon spot-contact-group-icon--contacts">${phoneIconHTML()}</div>
               <div class="spot-contact-group-body">
-                <div class="spot-contact-group-label">${t(lang, 'contacts')}</div>
+                <div class="spot-contact-group-label">${escapeHtml(t(lang, 'contacts'))}</div>
                 <div class="spot-contact-lines">
                   ${site.contacts.map(c => `
-                    <a href="tel:${c.phone.replace(/\s/g,'')}" class="spot-contact-link">
-                      <span class="spot-contact-link-text">${c.label}</span>
-                      <strong>${c.phone}</strong>
+                    <a href="${escapeAttribute(safeUrl(`tel:${c.phone.replace(/\s/g, '')}`))}" class="spot-contact-link">
+                      <span class="spot-contact-link-text">${escapeHtml(c.label)}</span>
+                      <strong>${escapeHtml(c.phone)}</strong>
                     </a>
                   `).join('')}
                 </div>
@@ -82,10 +88,10 @@ function headerHTML(site, lang) {
             <div class="spot-contact-group spot-contact-group--shuttle">
               <div class="spot-contact-group-icon spot-contact-group-icon--shuttle">${shuttleIconHTML()}</div>
               <div class="spot-contact-group-body">
-                <div class="spot-contact-group-label">${t(lang, 'shuttle')}</div>
-                <a href="tel:${site.shuttle.phone.replace(/\s/g,'')}" class="spot-contact-link spot-contact-link--shuttle">
-                  <span class="spot-contact-link-text">${site.shuttle.contactLabel || site.shuttle.label || t(lang, 'shuttle')}</span>
-                  <strong>${site.shuttle.phone}</strong>
+                <div class="spot-contact-group-label">${escapeHtml(t(lang, 'shuttle'))}</div>
+                <a href="${escapeAttribute(safeUrl(`tel:${site.shuttle.phone.replace(/\s/g, '')}`))}" class="spot-contact-link spot-contact-link--shuttle">
+                  <span class="spot-contact-link-text">${escapeHtml(site.shuttle.contactLabel || site.shuttle.label || t(lang, 'shuttle'))}</span>
+                  <strong>${escapeHtml(site.shuttle.phone)}</strong>
                 </a>
               </div>
             </div>
@@ -105,14 +111,14 @@ function alertsCardHTML(site, lang = 'it') {
       <div class="alert-card-header">
         <div class="section-title section-title--alert">
           <span class="alert-card-icon">!</span>
-          <span>${t(lang, 'alerts')}</span>
+          <span>${escapeHtml(t(lang, 'alerts'))}</span>
         </div>
       </div>
       <div class="alert-list">
         ${alerts.map(alert => `
           <div class="alert-item">
-            ${alert.title ? `<div class="alert-item-title">${alert.title}</div>` : ''}
-            <p class="alert-item-text">${alert.message ?? alert}</p>
+            ${alert.title ? `<div class="alert-item-title">${escapeHtml(alert.title)}</div>` : ''}
+            <p class="alert-item-text">${escapeHtml(alert.message ?? alert)}</p>
           </div>
         `).join('')}
       </div>
@@ -130,10 +136,10 @@ function spotTabsHTML(site, lang) {
     <div class="spot-tabs-wrapper">
       <div class="spot-tabs" role="tablist">
         <button class="spot-tab active" data-spot-tab="decolli">
-          ${t(lang, 'takeoffs')} <span class="spot-tab-count">${takeoffs.length}</span>
+          ${escapeHtml(t(lang, 'takeoffs'))} <span class="spot-tab-count">${takeoffs.length}</span>
         </button>
         <button class="spot-tab" data-spot-tab="atterraggio">
-          ${t(lang, 'landing')}
+          ${escapeHtml(t(lang, 'landing'))}
         </button>
       </div>
 
@@ -157,33 +163,30 @@ function spotTabsHTML(site, lang) {
 }
 
 function takeoffCardHTML(takeoff, site, lang = 'it') {
-  // Cerca webcam associata a questo decollo per nome
-  const webcam = site.webcams?.find(w =>
-    w.label.toLowerCase().includes(takeoff.name.toLowerCase().split('–')[0].trim().toLowerCase()) ||
-    takeoff.name.toLowerCase().includes(w.label.toLowerCase().split('–')[0].trim().toLowerCase())
-  ) ?? null
+  const webcam = findMatchingWebcam(site, takeoff.name)
+  const mapsUrl = safeUrl(takeoff.mapsUrl)
 
   return `
     <div class="spot-card">
       <div class="spot-card-header">
         <div class="spot-card-title-row">
           <div>
-            <div class="spot-card-name">${takeoff.name}</div>
-            <div class="spot-card-meta">${takeoff.type ?? ''}</div>
+            <div class="spot-card-name">${escapeHtml(takeoff.name)}</div>
+            <div class="spot-card-meta">${escapeHtml(takeoff.type ?? '')}</div>
           </div>
         </div>
         <div class="spot-card-badges">
-          ${takeoff.altitude  ? `<span class="badge badge-blue">${takeoff.altitude} m</span>` : ''}
-          ${takeoff.windDirs?.length ? `<span class="badge badge-gray">↙ ${takeoff.windDirs.join('/')}</span>` : ''}
-          ${takeoff.season    ? `<span class="badge badge-gray">${takeoff.season}</span>` : ''}
+          ${takeoff.altitude ? `<span class="badge badge-blue">${escapeHtml(`${takeoff.altitude} m`)}</span>` : ''}
+          ${takeoff.windDirs?.length ? `<span class="badge badge-gray">↙ ${escapeHtml(takeoff.windDirs.join('/'))}</span>` : ''}
+          ${takeoff.season ? `<span class="badge badge-gray">${escapeHtml(takeoff.season)}</span>` : ''}
         </div>
       </div>
 
       ${webcam ? webcamInlineHTML(webcam, lang) : noWebcamHTML(lang)}
 
-      ${takeoff.mapsUrl ? `
-        <a href="${takeoff.mapsUrl}" target="_blank" rel="noopener" class="spot-maps-btn">
-          ${t(lang, 'navigateTakeoff')}
+      ${mapsUrl ? `
+        <a href="${escapeAttribute(mapsUrl)}" target="_blank" rel="noopener" class="spot-maps-btn">
+          ${escapeHtml(t(lang, 'navigateTakeoff'))}
         </a>
       ` : ''}
     </div>
@@ -191,27 +194,28 @@ function takeoffCardHTML(takeoff, site, lang = 'it') {
 }
 
 function landingCardHTML(l, site, lang = 'it') {
-  const webcam = site.webcams?.find(w =>
+  const webcam = findMatchingWebcam(site, l.name, w =>
     w.label.toLowerCase().includes('atterr') ||
     w.label.toLowerCase().includes('salto')
-  ) ?? null
+  )
+  const mapsUrl = safeUrl(l.mapsUrl)
 
   return `
     <div class="spot-card">
       <div class="spot-card-header">
         <div class="spot-card-title-row">
           <div>
-            <div class="spot-card-name">${l.name}</div>
-            ${l.altitude ? `<div class="spot-card-meta">${l.altitude} m s.l.m.</div>` : ''}
+            <div class="spot-card-name">${escapeHtml(l.name)}</div>
+            ${l.altitude ? `<div class="spot-card-meta">${escapeHtml(`${l.altitude} m s.l.m.`)}</div>` : ''}
           </div>
         </div>
       </div>
 
       ${webcam ? webcamInlineHTML(webcam, lang) : noWebcamHTML(lang)}
 
-      ${l.mapsUrl ? `
-        <a href="${l.mapsUrl}" target="_blank" rel="noopener" class="spot-maps-btn">
-          ${t(lang, 'navigateLanding')}
+      ${mapsUrl ? `
+        <a href="${escapeAttribute(mapsUrl)}" target="_blank" rel="noopener" class="spot-maps-btn">
+          ${escapeHtml(t(lang, 'navigateLanding'))}
         </a>
       ` : ''}
     </div>
@@ -220,9 +224,9 @@ function landingCardHTML(l, site, lang = 'it') {
 
 function noWebcamHTML(lang = 'it') {
   return `
-    <div class="spot-no-webcam">
-      <img src="${BASE_URL}no-webcam.svg" alt="Nessuna webcam" class="no-webcam-icon" />
-      <span>${t(lang, 'noWebcam')}</span>
+      <div class="spot-no-webcam">
+      <img src="${BASE_URL}no-webcam.svg" alt="${escapeAttribute(t(lang, 'noWebcam'))}" class="no-webcam-icon" />
+      <span>${escapeHtml(t(lang, 'noWebcam'))}</span>
     </div>
   `
 }
@@ -230,30 +234,35 @@ function noWebcamHTML(lang = 'it') {
 function webcamInlineHTML(cam, lang = 'it') {
   if (cam.type === 'jpg') {
     const src = cam.embedUrl ?? cam.url
+    const sourceUrl = safeUrl(src)
+    const openUrl = safeUrl(cam.url)
+    if (!sourceUrl || !openUrl) return noWebcamHTML(lang)
     return `
       <div class="spot-webcam">
         <div class="spot-webcam-feed">
-          <img class="webcam-img" data-src="${src}" src="" alt="${cam.label}" />
+          <img class="webcam-img" data-src="${escapeAttribute(sourceUrl)}" data-error-label="${escapeAttribute(t(lang, 'unavailable'))}" src="" alt="${escapeAttribute(cam.label)}" />
           <div class="webcam-skeleton"></div>
-          <div class="webcam-live"><span class="dot" style="width:5px;height:5px;background:#fff"></span>LIVE</div>
+          <div class="webcam-live"><span class="dot" style="width:5px;height:5px;background:#fff"></span>${escapeHtml(t(lang, 'liveBadge'))}</div>
           <div class="webcam-overlay">
-            <div class="webcam-overlay-title">${cam.label}</div>
+            <div class="webcam-overlay-title">${escapeHtml(cam.label)}</div>
           </div>
         </div>
         <div class="spot-webcam-footer">
           <span class="webcam-refresh-indicator" data-refresh="${cam.refreshSeconds ?? 120}">
             <span class="dot" style="background:var(--green)"></span>
-            ${t(lang, 'refreshEvery', { value: formatInterval(cam.refreshSeconds ?? 120, lang) })}
+            ${escapeHtml(t(lang, 'refreshEvery', { value: formatInterval(cam.refreshSeconds ?? 120, lang) }))}
           </span>
-          <a href="${cam.url}" target="_blank" rel="noopener" class="webcam-open-link">${t(lang, 'open')}</a>
+          <a href="${escapeAttribute(openUrl)}" target="_blank" rel="noopener" class="webcam-open-link">${escapeHtml(t(lang, 'open'))}</a>
         </div>
       </div>
     `
   }
   if (cam.type === 'link') {
+    const linkUrl = safeUrl(cam.url)
+    if (!linkUrl) return noWebcamHTML(lang)
     return `
       <div class="spot-webcam-link">
-        <a href="${cam.url}" target="_blank" rel="noopener">${cam.label}</a>
+        <a href="${escapeAttribute(linkUrl)}" target="_blank" rel="noopener">${escapeHtml(cam.label)}</a>
       </div>
     `
   }
@@ -266,17 +275,20 @@ function meteoLinksHTML(site, lang = 'it') {
     site.meteo?.meteoblue && { name: 'Meteoblue', tag: t(lang, 'forecast'), url: site.meteo.meteoblue },
     site.meteo?.meteoParapente && { name: 'Meteo Parapente', tag: t(lang, 'paragliderWeather'), url: site.meteo.meteoParapente },
     (site.meteo?.windyUrl || site.meteo?.windy) && { name: 'Windy', tag: t(lang, 'liveWind'), url: site.meteo.windyUrl || `https://www.windy.com/?wind,${site.lat},${site.lon},11` },
-  ].filter(Boolean)
+  ]
+    .filter(Boolean)
+    .map(link => ({ ...link, safeHref: safeUrl(link.url) }))
+    .filter(link => Boolean(link.safeHref))
 
   if (!links.length) return `<div class="widget-empty">${t(lang, 'noContent')}</div>`
 
   return `
     <div class="meteo-links">
       ${links.map(l => `
-        <a href="${l.url}" target="_blank" rel="noopener" class="meteo-link-item">
+        <a href="${escapeAttribute(l.safeHref)}" target="_blank" rel="noopener" class="meteo-link-item">
           <div class="meteo-link-info">
-            <span class="meteo-link-name">${l.name}</span>
-            <span class="meteo-link-tag">${l.tag}</span>
+            <span class="meteo-link-name">${escapeHtml(l.name)}</span>
+            <span class="meteo-link-tag">${escapeHtml(l.tag)}</span>
           </div>
         </a>
       `).join('')}
@@ -288,10 +300,10 @@ function widgetCardHTML(title, subtitle, content, lang = 'it') {
   return `
     <section class="widget-card">
       <div class="widget-card-header">
-        <div class="section-title">${title}</div>
-        ${subtitle ? `<p class="widget-card-subtitle">${subtitle}</p>` : ''}
+        <div class="section-title">${escapeHtml(title)}</div>
+        ${subtitle ? `<p class="widget-card-subtitle">${escapeHtml(subtitle)}</p>` : ''}
       </div>
-      ${content ? content : `<div class="widget-empty">${t(lang, 'noContent')}</div>`}
+      ${content ? content : `<div class="widget-empty">${escapeHtml(t(lang, 'noContent'))}</div>`}
     </section>
   `
 }

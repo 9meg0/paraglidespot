@@ -5,6 +5,7 @@ import { renderTabSiti, initSpotTabs }               from './components/TabSiti.
 import { initWebcamBehavior, clearWebcamTimers } from './components/TabWebcam.js'
 import { sites }                                      from './data/sites/index.js'
 import { t, translations }                            from './i18n.js'
+import { readStorage, writeStorage }                  from './utils/storage.js'
 
 // ── Stato ────────────────────────────────────────────────────────────────────
 function getSiteIdFromHash() {
@@ -14,7 +15,7 @@ function getSiteIdFromHash() {
 
 const state = {
   activeSiteId: getSiteIdFromHash() ?? sites[0]?.id ?? null,
-  lang: localStorage.getItem('paraglidespot-lang') === 'en' ? 'en' : 'it',
+  lang: readStorage('paraglidespot-lang') === 'en' ? 'en' : 'it',
 }
 
 // ── Elementi DOM ─────────────────────────────────────────────────────────────
@@ -49,7 +50,7 @@ langSwitchEl?.addEventListener('click', e => {
   const nextLang = btn.dataset.lang
   if (!nextLang || nextLang === state.lang) return
   state.lang = nextLang
-  localStorage.setItem('paraglidespot-lang', state.lang)
+  writeStorage('paraglidespot-lang', state.lang)
   sidebar.setLanguage(state.lang)
   renderChrome()
   renderMain()

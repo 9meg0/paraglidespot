@@ -1,11 +1,14 @@
 // Timer di refresh attivi — cancellati ad ogni re-render
 const activeRefreshTimers = new Set()
+const activeObservers = new Set()
 
 const BASE_URL = import.meta.env.BASE_URL
 
 export function clearWebcamTimers() {
   activeRefreshTimers.forEach(id => clearInterval(id))
   activeRefreshTimers.clear()
+  activeObservers.forEach(observer => observer.disconnect())
+  activeObservers.clear()
 }
 
 /**
@@ -33,6 +36,7 @@ export function initWebcamBehavior(container) {
     })
   }, { rootMargin: '150px' })
 
+  activeObservers.add(observer)
   lazyEls.forEach(el => observer.observe(el))
 }
 
@@ -41,17 +45,21 @@ function loadJpgCam(img) {
   if (!src) return
 
   const skeleton = img.parentElement?.querySelector('.webcam-skeleton')
-
-  const tmp = new Image()
-  tmp.onload = () => { img.src = src; skeleton?.remove() }
-  tmp.onerror = () => showCamError(img)
-  tmp.src = src
-  delete img.dataset.src
-
-  // Auto-refresh
   const indicator = img.closest('[data-refresh]') ?? img.parentElement?.querySelector('[data-refresh]')
   const refreshSec = Number(indicator?.dataset.refresh ?? 120)
 
+  const tmp = new Image()
+  tmp.onload = () => {
+    img.src = src
+    skeleton?.remove()
+    startRefreshTimer(img, src, refreshSec)
+  }
+  tmp.onerror = () => showCamError(img)
+  tmp.src = src
+  delete img.dataset.src
+}
+
+function startRefreshTimer(img, src, refreshSec) {
   const timerId = setInterval(() => {
     const base = img.dataset.baseSrc ?? src
     img.dataset.baseSrc = base
@@ -63,7 +71,11 @@ function loadJpgCam(img) {
       const ind = img.closest('.spot-webcam')?.querySelector('.webcam-refresh-indicator')
       if (ind) flashRefreshIndicator(ind)
     }
-    tmp2.onerror = () => showCamError(img)
+    tmp2.onerror = () => {
+      clearInterval(timerId)
+      activeRefreshTimers.delete(timerId)
+      showCamError(img)
+    }
     tmp2.src = refreshSrc
   }, refreshSec * 1000)
 
@@ -84,12 +96,23 @@ function checkIframeLoaded(iframe) {
 function showCamError(img) {
   const feed = img.closest('.webcam-feed, .spot-webcam-feed')
   if (!feed) return
+  if (feed.querySelector('.webcam-offline')) return
   img.style.display = 'none'
   feed.querySelector('.webcam-skeleton')?.remove()
 
   const err = document.createElement('div')
   err.className = 'webcam-offline'
-  err.innerHTML = `<img src="${BASE_URL}no-webcam.svg" alt="Non disponibile" style="width:48px;height:48px;opacity:.5" /><span>Non disponibile</span>`
+  const icon = document.createElement('img')
+  icon.src = `${BASE_URL}no-webcam.svg`
+  icon.alt = img.dataset.errorLabel || 'Unavailable'
+  icon.style.width = '48px'
+  icon.style.height = '48px'
+  icon.style.opacity = '.5'
+
+  const label = document.createElement('span')
+  label.textContent = img.dataset.errorLabel || 'Unavailable'
+
+  err.append(icon, label)
   feed.appendChild(err)
 }
 

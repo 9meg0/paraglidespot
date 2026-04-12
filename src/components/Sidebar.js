@@ -1,5 +1,6 @@
 import { getSitesByRegion } from '../data/sites/index.js'
 import { t } from '../i18n.js'
+import { escapeAttribute, escapeHtml } from '../utils/dom.js'
 
 /**
  * Sidebar con filtro regione e lista siti.
@@ -59,7 +60,7 @@ export class Sidebar {
     const selectedId = activeSiteInRegion ? this.currentSiteId : primarySites[0]?.id ?? secondarySites[0]?.id ?? ''
 
     const optionHTML = site => `
-      <option value="${site.id}" ${site.id === selectedId ? 'selected' : ''}>${site.name}</option>
+      <option value="${escapeAttribute(site.id)}" ${site.id === selectedId ? 'selected' : ''}>${escapeHtml(site.name)}</option>
     `
 
     const groupedOptions = secondarySites.length
@@ -86,7 +87,7 @@ export class Sidebar {
   _sectionHTML(label, sites) {
     return `
       <div class="sidebar-region-section">
-        <div class="sidebar-section-title" style="margin-top:12px">${label}</div>
+        <div class="sidebar-section-title" style="margin-top:12px">${escapeHtml(label)}</div>
         <div class="site-list">
           ${sites.map(s => this._siteItemHTML(s)).join('')}
         </div>
@@ -96,20 +97,24 @@ export class Sidebar {
 
   _siteItemHTML(site) {
     const isActive = site.id === this.currentSiteId
+    const siteName = escapeHtml(site.name)
+    const altitude = escapeHtml(site.altitude)
+    const windDirs = escapeHtml(site.windDirs.join('/'))
+    const siteId = escapeAttribute(site.id)
     // Colore placeholder vento — sarà sostituito da dati reali quando disponibili
     const statusClass = 'status-gray'
     return `
       <div
         class="site-item ${isActive ? 'active' : ''}"
-        data-site-id="${site.id}"
+        data-site-id="${siteId}"
         role="button"
         tabindex="0"
-        aria-label="${site.name}"
+        aria-label="${siteName}"
       >
         <span class="site-status ${statusClass}"></span>
         <div class="site-info">
-          <div class="site-name">${site.name}</div>
-          <div class="site-meta">${site.altitude} · ${site.windDirs.join('/')}</div>
+          <div class="site-name">${siteName}</div>
+          <div class="site-meta">${altitude} · ${windDirs}</div>
         </div>
         <div class="site-wind" style="color:var(--text3)">—</div>
       </div>
@@ -162,11 +167,18 @@ export class Sidebar {
   /** Seleziona un sito programmaticamente (es. primo della lista all'avvio) */
   selectSite(siteId) {
     this.currentSiteId = siteId
+    this.currentRegion = this._resolveRegionForSite(siteId)
     this._renderSiteList()
   }
 
   setLanguage(lang) {
     this.lang = lang
     this.render()
+  }
+
+  _resolveRegionForSite(siteId) {
+    const regionWithSite = ['piemonte', 'liguria', 'tutti']
+      .find(region => getSitesByRegion(region).some(site => site.id === siteId))
+    return regionWithSite && regionWithSite !== 'tutti' ? regionWithSite : this.currentRegion
   }
 }

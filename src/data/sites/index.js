@@ -13,12 +13,24 @@
  * I file che iniziano con '_' (es. _template.json) sono ignorati.
  */
 
+import { validateSite } from './schema.js'
+
 // Vite import.meta.glob: include tutti i .json nella cartella eccetto _*.json
 const modules = import.meta.glob('./[!_]*.json', { eager: true, import: 'default' })
 
+const sitesWithSource = Object.entries(modules)
+  .filter(([, site]) => Boolean(site))
+  .map(([path, site]) => ({ path, site }))
+
+const validationErrors = sitesWithSource.flatMap(({ path, site }) => validateSite(site, path))
+
+if (validationErrors.length) {
+  throw new Error(`Invalid site data:\n- ${validationErrors.join('\n- ')}`)
+}
+
 /** @type {Site[]} */
-export const sites = Object.values(modules)
-  .filter(Boolean)
+export const sites = sitesWithSource
+  .map(({ site }) => site)
   .sort((a, b) => a.name.localeCompare(b.name, 'it'))
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -99,7 +111,9 @@ export function getSiteById(id) {
 /**
  * @typedef {Object} MeteoLinks
  * @property {{lat:number,lon:number,zoom:number,overlay:string}|null} [windy]
+ * @property {string|null} [windyUrl]
  * @property {string|null} [meteoblue]
+ * @property {string|null} [meteoParapente]
  * @property {string|null} [xcmeteor]
  * @property {string|null} [skysight]
  * @property {string|null} [arpa]
