@@ -13,6 +13,12 @@
     { "label": "English (John)",   "phone": "334 765 4321" }
   ],
 
+  "shuttle": {
+    "label": "Servizio Navetta",
+    "contactLabel": "Mario",
+    "phone": "333 123 4567"
+  },
+
   "altitude": "400–1500 m",
   "windDirs": ["N", "NW"],
 
@@ -58,6 +64,13 @@
     "skysight":   "https://skysight.io/#44.0/7.5/10/BLTOPWIND",
     "arpa":       "https://www.arpa.piemonte.it/rischinaturali/tematismi/meteo/previsioni/bollettini"
   },
+
+  "alerts": [
+    {
+      "title": "Avviso importante",
+      "message": "Messaggio importante visibile in evidenza nella scheda spot."
+    }
+  ],
 
   "notes": ""
 }

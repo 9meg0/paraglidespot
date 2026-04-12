@@ -2,7 +2,7 @@
  * Registro delle località — auto-discovery.
  *
  * Per AGGIUNGERE una località:
- *   1. cp src/data/sites/_template.js src/data/sites/nome-localita.js
+ *   1. cp src/data/sites/_template.json src/data/sites/nome-localita.json
  *   2. Compila i campi nel nuovo file
  *   ✅ Fine — nessun altro file da toccare.
  *
@@ -10,10 +10,10 @@
  *   1. Cancella il file della località
  *   ✅ Fine — sparisce automaticamente.
  *
- * I file che iniziano con '_' (es. _template.js) sono ignorati.
+ * I file che iniziano con '_' (es. _template.json) sono ignorati.
  */
 
-// Vite import.meta.glob: include tutti i .js nella cartella eccetto _*.js
+// Vite import.meta.glob: include tutti i .json nella cartella eccetto _*.json
 const modules = import.meta.glob('./[!_]*.json', { eager: true, import: 'default' })
 
 /** @type {Site[]} */
@@ -55,6 +55,7 @@ export function getSiteById(id) {
  * @property {Webcam[]} webcams       - Webcam (0 o più)
  * @property {MeteoLinks} meteo       - Link meteo specifici per la località
  * @property {ShuttleService} [shuttle] - Info servizio navetta
+ * @property {Alert[]} [alerts]       - Avvisi o note importanti in evidenza
  * @property {string}   [notes]       - Nota libera mostrata in fondo alla scheda
  */
 
@@ -109,4 +110,10 @@ export function getSiteById(id) {
  * @property {string} label
  * @property {string} contactLabel
  * @property {string} phone
+ */
+
+/**
+ * @typedef {Object} Alert
+ * @property {string} [title]
+ * @property {string} message
  */

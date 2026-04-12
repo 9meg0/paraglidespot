@@ -9,8 +9,8 @@
   "rulesUrl": "https://www.vlse.it/regolamento",
 
   "contacts": [
-    { "label": "Italiano (Flavio)", "phone": "347 242 4494" },
-    { "label": "English (Ezio)",    "phone": "346 806 7361" }
+    { "label": "IT - Flavio", "phone": "347 242 4494" },
+    { "label": "EN - Ezio", "phone": "346 806 7361" }
   ],
 
   "shuttle": {
@@ -75,8 +75,8 @@
   },
   "alerts": [
     {
-      "title": "Belice",
-      "message": "Aperto punto ristoro in decollo da maggio a settembre."
+      "title": "Punto ristoro in decollo",
+      "message": "Aperto solitamente da aprile a settembre."
     }
   ],
   "notes": ""

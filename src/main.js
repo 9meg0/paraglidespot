@@ -62,7 +62,6 @@ function renderMain() {
   mainEl.innerHTML = `<div class="tab-panel active">${html}</div>`
   initSpotTabs(mainEl)
   initWebcamBehavior(mainEl)
-  lazyLoadIframes()
 }
 
 function renderChrome() {
@@ -79,25 +78,6 @@ function renderChrome() {
   langSwitchEl?.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === state.lang)
   })
-}
-
-// ── Lazy load iframe ─────────────────────────────────────────────────────────
-function lazyLoadIframes() {
-  const iframes = mainEl.querySelectorAll('iframe[data-src]')
-  if (!iframes.length) return
-
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const iframe = entry.target
-        iframe.src = iframe.dataset.src
-        delete iframe.dataset.src
-        obs.unobserve(iframe)
-      }
-    })
-  }, { rootMargin: '100px' })
-
-  iframes.forEach(iframe => observer.observe(iframe))
 }
 
 // ── Bootstrap ────────────────────────────────────────────────────────────────

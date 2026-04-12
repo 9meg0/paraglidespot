@@ -208,6 +208,13 @@ Here is the template currently used by the project:
     "xcmeteor": "https://www.xcmeteor.com/meteo?lat=44.0&lon=7.5"
   },
 
+  "alerts": [
+    {
+      "title": "Important notice",
+      "message": "Important message shown in a highlighted alert widget."
+    }
+  ],
+
   "notes": ""
 }
 ```
