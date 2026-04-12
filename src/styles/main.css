@@ -1124,23 +1124,39 @@ a:hover { text-decoration: underline; }
 
   .spot-contacts {
     flex-direction: column;
-    gap: 8px;
+    align-items: flex-start;
+    gap: 10px;
   }
 
   .spot-contact-group {
     min-width: 0;
+    width: auto;
+    max-width: 100%;
     align-items: flex-start;
+    flex: 0 1 auto;
   }
 
   .spot-contact-group-icon {
     margin-top: 1px;
   }
 
+  .spot-contact-group-body {
+    width: auto;
+    max-width: 100%;
+  }
+
+  .spot-contact-lines {
+    width: auto;
+    max-width: 100%;
+  }
+
   .spot-contact-link {
-    width: 100%;
+    width: auto;
     min-width: 0;
+    max-width: 100%;
     gap: 10px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
   }
 
   .spot-contact-link-text {
