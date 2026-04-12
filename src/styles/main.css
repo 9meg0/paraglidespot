@@ -779,42 +779,71 @@ a:hover { text-decoration: underline; }
 
 .spot-contacts {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 16px 24px;
   font-size: 13px;
 }
 
-.spot-contacts-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text3);
-  font-weight: 600;
-}
-
-.spot-contacts-icon,
-.widget-check {
-  color: var(--accent);
-}
-
-.spot-contacts-list {
+.spot-contact-group {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
+  min-width: 260px;
+  flex: 1 1 320px;
+}
+
+.spot-contact-group-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.spot-contact-group-label {
+  font-size: 12px;
+  color: var(--text3);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.spot-contact-group-icon,
+.widget-check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.spot-contact-group-icon--contacts {
+  color: var(--accent);
+  background: rgba(91,155,255,.12);
+  border: 1px solid rgba(91,155,255,.22);
+}
+
+.spot-contact-group-icon--shuttle {
+  background: rgba(139,219,154,.12);
+  border: 1px solid rgba(139,219,154,.22);
+}
+
+.spot-contact-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .spot-contact-link {
   color: var(--text2);
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   gap: 16px;
-  min-width: 260px;
-  flex: 1 1 320px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.05);
-  background: rgba(255,255,255,0.03);
+  min-width: 0;
 }
 .spot-contact-link strong {
   color: var(--accent);
@@ -828,36 +857,73 @@ a:hover { text-decoration: underline; }
   min-width: 0;
 }
 
-.spot-shuttle-inline {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  min-width: 260px;
-  flex: 1 1 320px;
-  color: var(--text2);
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(91,155,255,.14);
-  background: rgba(91,155,255,.08);
-}
-
-.spot-shuttle-inline-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text2);
-  padding: 2px 7px;
-  border-radius: 999px;
-  background: rgba(91,155,255,.1);
-  border: 1px solid rgba(91,155,255,.18);
-}
-
-.spot-shuttle-inline-phone {
-  font-size: 15px;
-  font-weight: 700;
+.spot-contact-link--shuttle strong {
   color: #c7d9ff;
 }
-.spot-shuttle-inline-phone:hover { color: var(--accent); }
+
+.spot-contact-link--shuttle:hover strong {
+  color: var(--accent);
+}
+
+.alert-card {
+  background: linear-gradient(180deg, rgba(245,158,11,.14) 0%, rgba(20,24,39,.98) 100%);
+  border: 1px solid rgba(245,158,11,.28);
+  border-radius: var(--radius);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 12px 28px rgba(0,0,0,.18);
+}
+
+.alert-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.section-title--alert::after {
+  background: rgba(245,158,11,.24);
+}
+
+.alert-card-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245,158,11,.18);
+  color: #ffd18a;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.alert-item {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(12,15,26,.38);
+  border: 1px solid rgba(245,158,11,.16);
+}
+
+.alert-item-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffd18a;
+  margin-bottom: 4px;
+}
+
+.alert-item-text {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.5;
+}
 
 /* ── SPOT TABS (Decolli / Atterraggio) ───────────────────────────────────── */
 .spot-tabs-wrapper {
@@ -1362,35 +1428,31 @@ a:hover { text-decoration: underline; }
   }
 
   .spot-contacts {
+    flex-direction: column;
     gap: 8px;
   }
 
-  .spot-contacts-label {
-    margin-bottom: 2px;
+  .spot-contact-group {
+    min-width: 0;
+    align-items: flex-start;
   }
 
-  .spot-contacts-list {
-    flex-direction: column;
+  .spot-contact-group-icon {
+    margin-top: 1px;
   }
 
-  .spot-contact-link,
-  .spot-shuttle-inline {
+  .spot-contact-link {
     width: 100%;
     min-width: 0;
     gap: 10px;
     flex-wrap: wrap;
-    padding: 10px 12px;
-    border-radius: 12px;
   }
 
-  .spot-contact-link-text,
-  .spot-shuttle-inline-label,
-  .spot-shuttle-inline-phone {
+  .spot-contact-link-text {
     white-space: normal;
   }
 
-  .spot-contact-link strong,
-  .spot-shuttle-inline-phone {
+  .spot-contact-link strong {
     font-size: 14px;
   }
 

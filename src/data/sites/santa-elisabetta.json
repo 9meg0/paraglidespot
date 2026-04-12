@@ -72,6 +72,12 @@
     "windyUrl":   "https://www.windy.com/45.406/7.640?45.402,7.645,14",
     "windy":      { "lat": 45.4179, "lon": 7.6422, "zoom": 11, "overlay": "wind" },
     "meteoblue": "https://www.meteoblue.com/it/tempo/settimana/santa-elisabetta_italia_8983987"  
-          },
+  },
+  "alerts": [
+    {
+      "title": "Belice",
+      "message": "Aperto punto ristoro in decollo da maggio a settembre."
+    }
+  ],
   "notes": ""
 }

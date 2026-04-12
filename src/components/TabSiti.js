@@ -12,6 +12,7 @@ export function renderTabSiti(siteId, lang = 'it') {
 
   return `
     ${headerHTML(site, lang)}
+    ${alertsCardHTML(site, lang)}
     ${spotTabsHTML(site, lang)}
     ${site.notes ? `<div class="notes-card">${site.notes}</div>` : ''}
     ${widgetCardHTML(t(lang, 'weatherInfo'), '', meteoLinksHTML(site, lang), lang)}
@@ -41,27 +42,61 @@ function headerHTML(site, lang) {
       <div class="spot-header-divider"></div>
       ${(site.contacts?.length || site.shuttle?.phone) ? `
         <div class="spot-contacts">
-          <div class="spot-contacts-label">
-            <span class="spot-contacts-icon">☎</span>
-            <span>${t(lang, 'contacts')}</span>
-          </div>
-          <div class="spot-contacts-list">
-            ${(site.contacts ?? []).map(c => `
-              <a href="tel:${c.phone.replace(/\s/g,'')}" class="spot-contact-link">
-                <span class="spot-contact-link-text">${c.label}</span>
-                <strong>${c.phone}</strong>
-              </a>
-            `).join('')}
-            ${site.shuttle?.phone ? `
-              <a href="tel:${site.shuttle.phone.replace(/\s/g,'')}" class="spot-shuttle-inline">
-                <span class="spot-shuttle-inline-label">${t(lang, 'shuttle')}</span>
-                <span class="spot-shuttle-inline-phone">${site.shuttle.phone}</span>
-              </a>
-            ` : ''}
-          </div>
+          ${site.contacts?.length ? `
+            <div class="spot-contact-group">
+              <div class="spot-contact-group-icon spot-contact-group-icon--contacts">☎</div>
+              <div class="spot-contact-group-body">
+                <div class="spot-contact-group-label">${t(lang, 'contacts')}</div>
+                <div class="spot-contact-lines">
+                  ${site.contacts.map(c => `
+                    <a href="tel:${c.phone.replace(/\s/g,'')}" class="spot-contact-link">
+                      <span class="spot-contact-link-text">${c.label}</span>
+                      <strong>${c.phone}</strong>
+                    </a>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          ` : ''}
+          ${site.shuttle?.phone ? `
+            <div class="spot-contact-group spot-contact-group--shuttle">
+              <div class="spot-contact-group-icon spot-contact-group-icon--shuttle">🚌</div>
+              <div class="spot-contact-group-body">
+                <div class="spot-contact-group-label">${t(lang, 'shuttle')}</div>
+                <a href="tel:${site.shuttle.phone.replace(/\s/g,'')}" class="spot-contact-link spot-contact-link--shuttle">
+                  <span class="spot-contact-link-text">${site.shuttle.contactLabel || site.shuttle.label || t(lang, 'shuttle')}</span>
+                  <strong>${site.shuttle.phone}</strong>
+                </a>
+              </div>
+            </div>
+          ` : ''}
         </div>
       ` : ''}
     </div>
+  `
+}
+
+function alertsCardHTML(site, lang = 'it') {
+  const alerts = site.alerts ?? []
+  if (!alerts.length) return ''
+
+  return `
+    <section class="alert-card">
+      <div class="alert-card-header">
+        <div class="section-title section-title--alert">
+          <span class="alert-card-icon">!</span>
+          <span>${t(lang, 'alerts')}</span>
+        </div>
+      </div>
+      <div class="alert-list">
+        ${alerts.map(alert => `
+          <div class="alert-item">
+            ${alert.title ? `<div class="alert-item-title">${alert.title}</div>` : ''}
+            <p class="alert-item-text">${alert.message ?? alert}</p>
+          </div>
+        `).join('')}
+      </div>
+    </section>
   `
 }
 
