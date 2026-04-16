@@ -59,10 +59,7 @@
 
   "meteo": {
     "windy":      { "lat": 44.0, "lon": 7.5, "zoom": 10, "overlay": "wind" },
-    "meteoblue":  "https://www.meteoblue.com/it/tempo/settimana/nome_italia",
-    "xcmeteor":   "https://www.xcmeteor.com/meteo?lat=44.0&lon=7.5",
-    "skysight":   "https://skysight.io/#44.0/7.5/10/BLTOPWIND",
-    "arpa":       "https://www.arpa.piemonte.it/rischinaturali/tematismi/meteo/previsioni/bollettini"
+    "meteoblue":  "https://www.meteoblue.com/it/tempo/settimana/nome_italia"
   },
 
   "alerts": [

@@ -35,6 +35,7 @@ export const translations = {
     paragliderWeather: 'Parapendio',
     liveWind: 'Vento live',
     noContent: 'Nessun contenuto disponibile',
+    contributeSpot: 'Richiedi nuovo spot',
   },
   en: {
     htmlLang: 'en',
@@ -72,6 +73,7 @@ export const translations = {
     paragliderWeather: 'Paragliding',
     liveWind: 'Live wind',
     noContent: 'No content available',
+    contributeSpot: 'New spot',
   },
 }
 

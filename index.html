@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;800&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="/logo.png" />
+  <link rel="icon" type="image/png" href="%BASE_URL%logo.png" />
   <title>ParaglideSpot</title>
 </head>
 <body>
@@ -22,13 +22,14 @@
   <!-- ── TOPBAR ─────────────────────────────────────────────────────────── -->
   <header class="topbar">
     <div class="topbar-logo">
-      <img src="/logo.png" alt="ParaglideSpot" class="topbar-logo-icon" />
+      <img src="%BASE_URL%logo.png" alt="ParaglideSpot" class="topbar-logo-icon" />
       <div class="topbar-logo-text">
         <span class="topbar-name" id="topbar-name">ParaglideSpot</span>
         <span class="topbar-tagline" id="topbar-tagline">Il vento giusto, al momento giusto.</span>
       </div>
     </div>
     <div class="topbar-controls">
+      <a class="topbar-link" id="contribution-form-link" href="./spot-contribution-form.html">Richiedi nuovo spot</a>
       <div class="lang-switch" id="lang-switch" aria-label="Language switch">
         <button class="lang-btn" data-lang="it" type="button">🇮🇹 IT</button>
         <button class="lang-btn" data-lang="en" type="button">🇬🇧 EN</button>
@@ -51,6 +52,6 @@
 
   </div>
 
-  <script type="module" src="/src/main.js"></script>
+  <script type="module" src="./src/main.js"></script>
 </body>
 </html>

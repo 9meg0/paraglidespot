@@ -124,6 +124,12 @@ You do not need to write code to make ParaglideSpot better.
 
 If you know a flying spot and want it added, you can simply fill in the information using the template below and send it to the maintainers or submit it through a contribution channel when available.
 
+For non-technical contributors there is also a human-friendly fillable form at:
+
+- `public/spot-contribution-form.html`
+
+You can open it in the browser, fill it in, and use print/save as PDF before sending it over.
+
 The most useful contributions are:
 
 - accurate takeoff and landing coordinates
@@ -204,8 +210,7 @@ Here is the template currently used by the project:
     "meteoParapente": "https://meteo-parapente.com/#/44.0,7.5,11",
     "windyUrl": "https://www.windy.com/44.0/7.5?44.0,7.5,11",
     "windy": { "lat": 44.0, "lon": 7.5, "zoom": 10, "overlay": "wind" },
-    "meteoblue": "https://www.meteoblue.com/it/tempo/settimana/nome_italia",
-    "xcmeteor": "https://www.xcmeteor.com/meteo?lat=44.0&lon=7.5"
+    "meteoblue": "https://www.meteoblue.com/it/tempo/settimana/nome_italia"
   },
 
   "alerts": [

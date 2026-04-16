@@ -74,9 +74,6 @@ function validateMeteo(meteo, errors) {
   check(isOptionalString(meteo.meteoblue), 'meteo.meteoblue must be a string when present', errors)
   check(isOptionalString(meteo.meteoParapente), 'meteo.meteoParapente must be a string when present', errors)
   check(isOptionalString(meteo.windyUrl), 'meteo.windyUrl must be a string when present', errors)
-  check(isOptionalString(meteo.xcmeteor), 'meteo.xcmeteor must be a string when present', errors)
-  check(isOptionalString(meteo.skysight), 'meteo.skysight must be a string when present', errors)
-  check(isOptionalString(meteo.arpa), 'meteo.arpa must be a string when present', errors)
 
   if (meteo.windy != null) {
     check(isPlainObject(meteo.windy), 'meteo.windy must be an object when present', errors)

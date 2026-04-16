@@ -23,6 +23,7 @@ const sidebarEl = document.getElementById('sidebar')
 const mainEl    = document.getElementById('main-content')
 const taglineEl = document.getElementById('topbar-tagline')
 const langSwitchEl = document.getElementById('lang-switch')
+const contributionFormLinkEl = document.getElementById('contribution-form-link')
 
 // ── Sidebar ──────────────────────────────────────────────────────────────────
 const sidebar = new Sidebar(sidebarEl, state.lang)
@@ -69,6 +70,7 @@ function renderChrome() {
   document.documentElement.lang = translations[state.lang].htmlLang
   document.title = t(state.lang, 'title')
   if (taglineEl) taglineEl.textContent = t(state.lang, 'tagline')
+  if (contributionFormLinkEl) contributionFormLinkEl.textContent = t(state.lang, 'contributeSpot')
 
   const metaDescription = document.querySelector('meta[name="description"]')
   if (metaDescription) metaDescription.setAttribute('content', t(state.lang, 'metaDescription'))

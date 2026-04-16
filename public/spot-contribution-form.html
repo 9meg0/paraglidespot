@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ParaglideSpot - Scheda localita compilabile</title>
+    <style>
+      :root {
+        --bg: #f2f2f2;
+        --paper: #ffffff;
+        --ink: #1f1f1f;
+        --muted: #5f5f5f;
+        --line: #bdbdbd;
+        --line-strong: #8d8d8d;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+      }
+
+      .page {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .sheet {
+        background: var(--paper);
+        border: 1px solid var(--line-strong);
+      }
+
+      header {
+        padding: 20px 24px 16px;
+        border-bottom: 1px solid var(--line-strong);
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        font-weight: 700;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+        line-height: 1.2;
+      }
+
+      .lead {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.4;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .button,
+      button {
+        appearance: none;
+        border: 1px solid var(--line-strong);
+        border-radius: 4px;
+        padding: 8px 12px;
+        font: inherit;
+        font-weight: 400;
+        cursor: pointer;
+        background: #fff;
+        color: var(--ink);
+      }
+
+      main {
+        padding: 20px 24px 28px;
+      }
+
+      section + section {
+        margin-top: 20px;
+      }
+
+      section {
+        padding-top: 2px;
+      }
+
+      h2 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-copy {
+        margin: 0 0 12px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      .grid {
+        display: grid;
+        gap: 10px 12px;
+      }
+
+      .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .grid-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .block {
+        border: 1px solid var(--line);
+        border-radius: 0;
+        padding: 12px;
+        background: #fff;
+      }
+
+      label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        border: 1px solid var(--line-strong);
+        border-radius: 0;
+        padding: 9px 10px;
+        background: white;
+        color: var(--ink);
+        font: inherit;
+      }
+
+      textarea {
+        min-height: 96px;
+        resize: vertical;
+      }
+
+      .mini {
+        min-height: 64px;
+      }
+
+      .line-list {
+        display: grid;
+        gap: 8px;
+      }
+
+      .footer-note {
+        margin-top: 24px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      .footer-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .footer-status {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 760px) {
+        .grid-2,
+        .grid-3,
+        .grid-4 {
+          grid-template-columns: 1fr;
+        }
+
+        header,
+        main {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+      }
+
+      @media print {
+        body {
+          background: white;
+        }
+
+        .page {
+          max-width: none;
+          padding: 0;
+        }
+
+        .sheet {
+          box-shadow: none;
+          border: 0;
+        }
+
+        .actions {
+          display: none;
+        }
+
+        input,
+        textarea,
+        select,
+        .block {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="sheet">
+        <header>
+          <h1>Form dati nuovo spot di volo</h1>
+          <p class="lead">Form dati nuovo spot di volo.</p>
+          <div class="actions">
+            <button class="button" type="button" onclick="window.print()">Stampa / Salva PDF</button>
+            <button class="button" type="button" onclick="document.forms[0].reset()">Svuota modulo</button>
+          </div>
+        </header>
+
+        <main>
+          <form>
+            <section>
+              <h2>1. Dati principali</h2>
+              <p class="section-copy">
+                Informazioni base per identificare la localita e pubblicarla correttamente sul sito.
+              </p>
+              <div class="grid grid-2">
+                <div>
+                  <label for="spot-name">Nome localita / titolo visibile</label>
+                  <input id="spot-name" name="spot-name" placeholder="Es. Santa Elisabetta - Salto" />
+                </div>
+                <div>
+                  <label for="region">Regione</label>
+                  <select id="region" name="region">
+                    <option value=""></option>
+                    <option>Piemonte</option>
+                    <option>Liguria</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="province">Provincia</label>
+                  <input id="province" name="province" placeholder="Es. TO" />
+                </div>
+                <div>
+                  <label for="altitude-range">Altitudine atterraggio / decollo principali</label>
+                  <input id="altitude-range" name="altitude-range" placeholder="Es. 398-1400 m" />
+                </div>
+                <div>
+                  <label for="wind-main">Venti favorevoli principali</label>
+                  <input id="wind-main" name="wind-main" placeholder="Es. S, SW, W" />
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2>2. Link utili</h2>
+              <p class="section-copy">
+                Inserisci i collegamenti ufficiali se esistono. Anche uno solo è meglio di niente.
+              </p>
+              <div class="grid grid-3">
+                <div>
+                  <label for="website">Sito ufficiale / club</label>
+                  <input id="website" name="website" placeholder="https://..." />
+                </div>
+                <div>
+                  <label for="join-url">Link iscrizione / tesseramento</label>
+                  <input id="join-url" name="join-url" placeholder="https://..." />
+                </div>
+                <div>
+                  <label for="rules-url">Regolamento / norme locali</label>
+                  <input id="rules-url" name="rules-url" placeholder="https://..." />
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2>3. Contatti</h2>
+              <p class="section-copy">
+                Persone o recapiti utili per chi arriva sul posto e ha bisogno di informazioni pratiche.
+              </p>
+              <div class="line-list">
+                <div class="block">
+                  <label for="contact-1">Contatto 1</label>
+                  <textarea id="contact-1" class="mini" name="contact-1" placeholder="Es. Italiano - Mario&#10;Telefono: 333 123 4567"></textarea>
+                </div>
+                <div class="block">
+                  <label for="contact-2">Contatto 2</label>
+                  <textarea id="contact-2" class="mini" name="contact-2" placeholder="Es. English - John&#10;Telefono: 334 765 4321"></textarea>
+                </div>
+                <div class="block">
+                  <label for="contact-3">Contatto 3</label>
+                  <textarea id="contact-3" class="mini" name="contact-3" placeholder="Es. Italiano - Laura&#10;Telefono: 333 123 4567"></textarea>
+                </div>
+                <div class="block">
+                  <label for="contact-4">Contatto 4</label>
+                  <textarea id="contact-4" class="mini" name="contact-4" placeholder="Es. English - Mark&#10;Telefono: 334 765 4321"></textarea>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2>4. Navetta</h2>
+              <p class="section-copy">
+                Se non esiste un servizio navetta, lascia tutto vuoto.
+              </p>
+              <div class="grid grid-3">
+                <div>
+                  <label for="shuttle-label">Nome servizio</label>
+                  <input id="shuttle-label" name="shuttle-label" placeholder="Es. Servizio Navetta" />
+                </div>
+                <div>
+                  <label for="shuttle-contact">Persona di riferimento</label>
+                  <input id="shuttle-contact" name="shuttle-contact" placeholder="Es. Mario" />
+                </div>
+                <div>
+                  <label for="shuttle-phone">Telefono navetta</label>
+                  <input id="shuttle-phone" name="shuttle-phone" placeholder="Es. 333 123 4567" />
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2>5. Decolli</h2>
+              <p class="section-copy">
+                Compila una scheda per ogni decollo importante. Se i decolli sono piu di due, duplica questa sezione quando stampi o salva note aggiuntive in fondo.
+              </p>
+              <div class="line-list">
+                <div class="block">
+                  <label>Decollo 1</label>
+                  <div class="grid grid-2">
+                    <div>
+                      <label for="takeoff-1-name">Nome</label>
+                      <input id="takeoff-1-name" name="takeoff-1-name" placeholder="Es. Decollo Basso" />
+                    </div>
+                    <div>
+                      <label for="takeoff-1-altitude">Altitudine</label>
+                      <input id="takeoff-1-altitude" name="takeoff-1-altitude" placeholder="Es. 1000" />
+                    </div>
+                    <div>
+                      <label for="takeoff-1-lat">Latitudine</label>
+                      <input id="takeoff-1-lat" name="takeoff-1-lat" placeholder="Es. 45.4179093" />
+                    </div>
+                    <div>
+                      <label for="takeoff-1-lon">Longitudine</label>
+                      <input id="takeoff-1-lon" name="takeoff-1-lon" placeholder="Es. 7.6421572" />
+                    </div>
+                    <div>
+                      <label for="takeoff-1-wind">Venti buoni</label>
+                      <input id="takeoff-1-wind" name="takeoff-1-wind" placeholder="Es. S, SW" />
+                    </div>
+                    <div>
+                      <label for="takeoff-1-type">Tipo / difficolta</label>
+                      <input id="takeoff-1-type" name="takeoff-1-type" placeholder="Es. Facile, parapendio" />
+                    </div>
+                    <div>
+                      <label for="takeoff-1-season">Stagione</label>
+                      <input id="takeoff-1-season" name="takeoff-1-season" placeholder="Es. Tutto l'anno" />
+                    </div>
+                    <div>
+                      <label for="takeoff-1-maps">Link Maps</label>
+                      <input id="takeoff-1-maps" name="takeoff-1-maps" placeholder="https://..." />
+                    </div>
+                  </div>
+                </div>
+                <div class="block">
+                  <label>Decollo 2</label>
+                  <div class="grid grid-2">
+                    <div>
+                      <label for="takeoff-2-name">Nome</label>
+                      <input id="takeoff-2-name" name="takeoff-2-name" placeholder="Es. Decollo Alto" />
+                    </div>
+                    <div>
+                      <label for="takeoff-2-altitude">Altitudine</label>
+                      <input id="takeoff-2-altitude" name="takeoff-2-altitude" placeholder="Es. 1400" />
+                    </div>
+                    <div>
+                      <label for="takeoff-2-lat">Latitudine</label>
+                      <input id="takeoff-2-lat" name="takeoff-2-lat" placeholder="Es. 45.4431091" />
+                    </div>
+                    <div>
+                      <label for="takeoff-2-lon">Longitudine</label>
+                      <input id="takeoff-2-lon" name="takeoff-2-lon" placeholder="Es. 7.6535628" />
+                    </div>
+                    <div>
+                      <label for="takeoff-2-wind">Venti buoni</label>
+                      <input id="takeoff-2-wind" name="takeoff-2-wind" placeholder="Es. S, SW" />
+                    </div>
+                    <div>
+                      <label for="takeoff-2-type">Tipo / difficolta</label>
+                      <input id="takeoff-2-type" name="takeoff-2-type" placeholder="Es. Facile, parapendio" />
+                    </div>
+                    <div>
+                      <label for="takeoff-2-season">Stagione</label>
+                      <input id="takeoff-2-season" name="takeoff-2-season" placeholder="Es. Primavera, estate" />
+                    </div>
+                    <div>
+                      <label for="takeoff-2-maps">Link Maps</label>
+                      <input id="takeoff-2-maps" name="takeoff-2-maps" placeholder="https://..." />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2>6. Atterraggio</h2>
+              <p class="section-copy">
+                Indica il campo principale e qualsiasi nota davvero utile per evitare errori o accessi sbagliati.
+              </p>
+              <div class="line-list">
+                <div class="block">
+                  <label>Atterraggio 1</label>
+                  <div class="grid grid-2">
+                    <div>
+                      <label for="landing-name">Nome / zona atterraggio</label>
+                      <input id="landing-name" name="landing-name" placeholder="Es. Cuorgne - Via Pont Canavese" />
+                    </div>
+                    <div>
+                      <label for="landing-altitude">Altitudine</label>
+                      <input id="landing-altitude" name="landing-altitude" placeholder="Es. 398" />
+                    </div>
+                    <div>
+                      <label for="landing-lat">Latitudine</label>
+                      <input id="landing-lat" name="landing-lat" placeholder="Es. 45.4022024" />
+                    </div>
+                    <div>
+                      <label for="landing-lon">Longitudine</label>
+                      <input id="landing-lon" name="landing-lon" placeholder="Es. 7.6444938" />
+                    </div>
+                    <div>
+                      <label for="landing-maps">Link Maps</label>
+                      <input id="landing-maps" name="landing-maps" placeholder="https://..." />
+                    </div>
+                    <div>
+                      <label for="landing-notes">Note</label>
+                      <input id="landing-notes" name="landing-notes" placeholder="Es. accesso, ostacoli, note utili" />
+                    </div>
+                  </div>
+                </div>
+                <div class="block">
+                  <label>Atterraggio 2</label>
+                  <div class="grid grid-2">
+                    <div>
+                      <label for="landing-2-name">Nome / zona atterraggio</label>
+                      <input id="landing-2-name" name="landing-2-name" placeholder="Es. Atterraggio secondario" />
+                    </div>
+                    <div>
+                      <label for="landing-2-altitude">Altitudine</label>
+                      <input id="landing-2-altitude" name="landing-2-altitude" placeholder="Es. 420" />
+                    </div>
+                    <div>
+                      <label for="landing-2-lat">Latitudine</label>
+                      <input id="landing-2-lat" name="landing-2-lat" placeholder="Es. 45.4022024" />
+                    </div>
+                    <div>
+                      <label for="landing-2-lon">Longitudine</label>
+                      <input id="landing-2-lon" name="landing-2-lon" placeholder="Es. 7.6444938" />
+                    </div>
+                    <div>
+                      <label for="landing-2-maps">Link Maps</label>
+                      <input id="landing-2-maps" name="landing-2-maps" placeholder="https://..." />
+                    </div>
+                    <div>
+                      <label for="landing-2-notes">Note</label>
+                      <input id="landing-2-notes" name="landing-2-notes" placeholder="Es. accesso, ostacoli, note utili" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2>7. Webcam</h2>
+              <p class="section-copy">
+                Anche qui va bene una sola webcam. Se non esiste, lascia vuoto.
+              </p>
+              <div class="grid grid-2">
+                <div class="block">
+                  <label for="webcam-1">Webcam 1</label>
+                  <textarea id="webcam-1" name="webcam-1" class="mini" placeholder="Nome / punto ripreso:&#10;Link pubblico:&#10;Link immagine diretta o embed:&#10;Tipo se noto: jpg / iframe / link"></textarea>
+                </div>
+                <div class="block">
+                  <label for="webcam-2">Webcam 2</label>
+                  <textarea id="webcam-2" name="webcam-2" class="mini" placeholder="Nome / punto ripreso:&#10;Link pubblico:&#10;Link immagine diretta o embed:&#10;Tipo se noto: jpg / iframe / link"></textarea>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2>8. Meteo</h2>
+              <p class="section-copy">
+                Inserisci solo i servizi davvero usati localmente. Non serve compilare tutto.
+              </p>
+              <div class="grid grid-3">
+                <div>
+                  <label for="windy-url">Windy</label>
+                  <input id="windy-url" name="windy-url" placeholder="https://..." />
+                </div>
+                <div>
+                  <label for="meteoblue">Meteoblue</label>
+                  <input id="meteoblue" name="meteoblue" placeholder="https://..." />
+                </div>
+                <div>
+                  <label for="meteo-parapente">Meteo-Parapente</label>
+                  <input id="meteo-parapente" name="meteo-parapente" placeholder="https://..." />
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2>9. Avvisi e note finali</h2>
+              <p class="section-copy">
+                Usa questo spazio per restrizioni, pericoli, periodi particolari, eventi, ristoro, accessi o qualsiasi nota utile per chi vola.
+              </p>
+              <div class="line-list">
+                <div>
+                  <label for="alerts">Avvisi importanti</label>
+                  <textarea id="alerts" name="alerts" placeholder="Un avviso per riga. Se vuoi, usa il formato: Titolo - messaggio"></textarea>
+                </div>
+                <div>
+                  <label for="final-notes">Note libere</label>
+                  <textarea id="final-notes" name="final-notes" placeholder="Tutto quello che non entra bene nelle sezioni sopra."></textarea>
+                </div>
+              </div>
+            </section>
+          </form>
+
+          <div class="footer-note">
+            Apri questa pagina nel browser e usa Stampa poi Salva come PDF.
+            <div class="footer-actions">
+              <button class="button" id="download-data-button" type="button">Scarica dati compilati</button>
+              <button class="button" id="email-data-button" type="button">Prepara email</button>
+            </div>
+            <div class="footer-status" id="footer-status"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <script>
+      const DEFAULT_RECIPIENT = 'aboutme_e@hotmail.it'
+
+      const form = document.querySelector('form')
+      const downloadButton = document.getElementById('download-data-button')
+      const emailButton = document.getElementById('email-data-button')
+      const footerStatus = document.getElementById('footer-status')
+
+      function getRecipient() {
+        const params = new URLSearchParams(window.location.search)
+        return params.get('to') || DEFAULT_RECIPIENT
+      }
+
+      function slugify(value) {
+        return (value || 'nuovo-spot')
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '')
+          || 'nuovo-spot'
+      }
+
+      function collectFormData() {
+        const values = Object.fromEntries(new FormData(form).entries())
+        return Object.fromEntries(
+          Object.entries(values).filter(([, value]) => String(value).trim() !== '')
+        )
+      }
+
+      function formatDataText(data) {
+        const lines = ['Form dati nuovo spot di volo', '']
+        for (const [key, value] of Object.entries(data)) {
+          const label = key.replaceAll('-', ' ')
+          lines.push(`${label}:`)
+          lines.push(String(value))
+          lines.push('')
+        }
+        return lines.join('\n').trim()
+      }
+
+      function downloadCompiledData() {
+        const data = collectFormData()
+        const spotName = data['spot-name'] || 'nuovo-spot'
+        const content = formatDataText(data)
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
+        const url = URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.href = url
+        link.download = `${slugify(spotName)}-paraglidespot.txt`
+        document.body.appendChild(link)
+        link.click()
+        link.remove()
+        URL.revokeObjectURL(url)
+        footerStatus.textContent = 'File scaricato. Puoi allegarlo alla mail.'
+      }
+
+      function prepareEmail() {
+        const recipient = getRecipient()
+        const data = collectFormData()
+        const spotName = data['spot-name'] || 'Nuovo spot'
+        const body = [
+          'Ciao,',
+          '',
+          'invio i dati per un nuovo spot di volo.',
+          '',
+          'Allego anche il file esportato dal modulo.',
+          '',
+          formatDataText(data),
+        ].join('\n')
+        const subject = `Nuovo spot di volo - ${spotName}`
+        const mailto = `mailto:${encodeURIComponent(recipient)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+
+        if (!recipient) {
+          footerStatus.textContent = 'Destinatario non configurato. Aggiungi ?to=tuamail@dominio.it all’URL del modulo.'
+          return
+        }
+
+        footerStatus.textContent = 'Sto preparando l’email nel tuo client di posta.'
+        downloadCompiledData()
+        window.location.href = mailto
+      }
+
+      downloadButton.addEventListener('click', downloadCompiledData)
+      emailButton.addEventListener('click', prepareEmail)
+
+      footerStatus.textContent = ''
+    </script>
+  </body>
+</html>

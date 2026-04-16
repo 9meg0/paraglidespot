@@ -114,9 +114,6 @@ export function getSiteById(id) {
  * @property {string|null} [windyUrl]
  * @property {string|null} [meteoblue]
  * @property {string|null} [meteoParapente]
- * @property {string|null} [xcmeteor]
- * @property {string|null} [skysight]
- * @property {string|null} [arpa]
  */
 
 /**
